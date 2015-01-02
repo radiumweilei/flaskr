@@ -41,6 +41,20 @@ def get_case(_id):
         return to_json(result)
 
 
+@app.route('/case/insert', methods=['POST'])
+def insert_case():
+    if request.method == 'POST':
+        # {"caseUrl": "url", "caseText": "text", "_id": "10006ad3c52087e90e5e85dfeb6d6852", "crawlTime": 1419847414369}
+        insert = db['CaseObject'].save(request.json)  # 将提交的JSON保存到mongodb中, Content-type=application/json
+        return to_json(insert)
+
+
+@app.route('/case/<_id>', methods=['DELETE'])
+def delete_case(_id):
+    if request.method == 'DELETE':
+        insert = db['CaseObject'].remove(_id)  # 根据id删除
+        return to_json(insert)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
